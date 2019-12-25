@@ -9,6 +9,8 @@ defmodule EaModel.Application do
     children = [
       # Starts a worker by calling: EaModel.Worker.start_link(arg)
       # {EaModel.Worker, arg}
+      {EaModel.Report, []},
+      {Task.Supervisor, name: Report.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
