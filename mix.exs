@@ -24,7 +24,8 @@ defmodule EaModel.MixProject do
     [
       {:cocktail, "~> 0.8"},
       {:benchee, "~> 1.0", only: :dev},
-      {:flow, "~> 0.14"}
+      {:flow, "~> 0.14"},
+      {:excal, "~> 0.3.2"}
     ]
   end
 end

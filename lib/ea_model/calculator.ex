@@ -1,31 +1,31 @@
 defmodule EaModel.Calculator do
   alias EaModel.Profile
 
-  def items do
-    Enum.map(1..200, fn _x -> record() end)
+  def items(list) do
+    Enum.map(list, fn _x -> record() end)
   end
 
   def profiles do
     [
-      %{rrule: "RRULE:FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 100},
-      %{rrule: "RRULE:FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23", value: 0}
+      %{rrule: "FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 100},
+      %{rrule: "FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23", value: 0}
     ]
   end
 
   def record do
     %{
       load_profile: [
-        %{rrule: "RRULE:FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 100},
+        %{rrule: "FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 100},
         %{
-          rrule: "RRULE:FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23",
+          rrule: "FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23",
           value: 50
         }
       ],
       measured_rating: 1,
       on_off_profile: [
-        %{rrule: "RRULE:FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 1},
+        %{rrule: "FREQ=DAILY;BYHOUR=0,1,2,3,4,5,6,7,8,9,10,11,12", value: 1},
         %{
-          rrule: "RRULE:FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23",
+          rrule: "FREQ=DAILY;BYHOUR=13,14,15,16,17,18,19,20,21,22,23",
           value: 0
         }
       ]
@@ -42,12 +42,24 @@ defmodule EaModel.Calculator do
     %{area_id: 1, resource_use: use * record[:measured_rating], resource_cost: 1, resource_type: "electricity"}
   end
 
-  def a do
-    items()
+  def a(list) do
+    # items(list)
+    # |> Flow.from_enumerable(max_demand: :erlang.system_info(:schedulers_online))
+    # |> Flow.flat_map(fn item ->
+    #   begin = NaiveDateTime.utc_now()
+    #   # do_calculate(item)
+    #   a = Profile.generate(1, 2, 3)
+    #   NaiveDateTime.diff(NaiveDateTime.utc_now(), begin, :millisecond) |> IO.inspect()
+    #   a
+    # end)
+    # |> Flow.partition()
+    # |> Enum.to_list()
+    items(list)
     |> Task.async_stream(fn item ->
       begin = NaiveDateTime.utc_now()
-      do_calculate(item)
+      a = Profile.generate(1, 2, 3)
       NaiveDateTime.diff(NaiveDateTime.utc_now(), begin, :millisecond) |> IO.inspect()
+      a
     end)
     |> Enum.to_list()
   end
