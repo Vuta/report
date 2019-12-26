@@ -22,7 +22,6 @@ defmodule EaModel.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:cocktail, "~> 0.8"},
       {:benchee, "~> 1.0", only: :dev},
       {:flow, "~> 0.14"},
       {:excal, "~> 0.3.2"}
