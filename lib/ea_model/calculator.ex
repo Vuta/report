@@ -20,16 +20,8 @@ defmodule EaModel.Calculator do
     ]
   end
 
-  def on_off_profiles do
-    [
-      %{rrule: "FREQ=DAILY;BYHOUR=0,2,4,6,8,10,12,14,16,18,20,22", value: 100},
-      %{rrule: "FREQ=DAILY;BYHOUR=1,3,5,7,9,11,13,15,17,19,21,23", value: 100}
-    ]
-  end
-
   def records(i) do
-    load_profiles()
-    |> Enum.map(fn profile ->
+    Enum.map(load_profiles(), fn profile ->
       %{
         id: i,
         profile: profile,
